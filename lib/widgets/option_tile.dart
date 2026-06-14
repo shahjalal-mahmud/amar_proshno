@@ -34,14 +34,14 @@ class OptionTile extends StatelessWidget {
           boxShadow: isSelected
               ? [
             BoxShadow(
-              color: colorScheme.primary.withOpacity(0.25),
+              color: colorScheme.primary.withValues(alpha: 0.25),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
           ]
               : [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 4,
               offset: const Offset(0, 1),
             ),
@@ -55,7 +55,7 @@ class OptionTile extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isSelected
-                    ? colorScheme.onPrimary.withOpacity(0.2)
+                    ? colorScheme.onPrimary.withValues(alpha: 0.2)
                     : colorScheme.primaryContainer,
               ),
               alignment: Alignment.center,

@@ -94,7 +94,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
-                      color: colorScheme.onSurface.withOpacity(0.6),
+                      color: colorScheme.onSurface.withValues(alpha: 0.6),
                     ),
                   ),
                   Text(
@@ -113,7 +113,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 child: LinearProgressIndicator(
                   value: _progress,
                   minHeight: 8,
-                  backgroundColor: colorScheme.surfaceVariant,
+                  backgroundColor: colorScheme.surfaceContainerHighest,
                   valueColor:
                   AlwaysStoppedAnimation<Color>(colorScheme.primary),
                 ),
@@ -123,10 +123,10 @@ class _QuizScreenState extends State<QuizScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: colorScheme.primaryContainer.withOpacity(0.4),
+                  color: colorScheme.primaryContainer.withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: colorScheme.primary.withOpacity(0.15),
+                    color: colorScheme.primary.withValues(alpha: 0.15),
                   ),
                 ),
                 child: Text(

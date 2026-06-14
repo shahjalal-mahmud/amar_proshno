@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: colorScheme.primary.withOpacity(0.7),
+                  color: colorScheme.primary.withValues(alpha: 0.7),
                   letterSpacing: 1.2,
                 ),
                 textAlign: TextAlign.center,
@@ -57,14 +57,14 @@ class HomeScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 decoration: BoxDecoration(
-                  color: colorScheme.primaryContainer.withOpacity(0.5),
+                  color: colorScheme.primaryContainer.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   'Test your knowledge with 10 fun questions.\nChallenge yourself and see your score!',
                   style: TextStyle(
                     fontSize: 15,
-                    color: colorScheme.onSurface.withOpacity(0.7),
+                    color: colorScheme.onSurface.withValues(alpha: 0.7),
                     height: 1.5,
                   ),
                   textAlign: TextAlign.center,
