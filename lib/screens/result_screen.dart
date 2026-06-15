@@ -11,9 +11,7 @@ class ResultScreen extends StatelessWidget {
   int get _correctCount {
     int count = 0;
     for (int i = 0; i < quizQuestions.length; i++) {
-      if (selectedAnswers[i] == quizQuestions[i].correctAnswerIndex) {
-        count++;
-      }
+      if (selectedAnswers[i] == quizQuestions[i].correctAnswerIndex) count++;
     }
     return count;
   }
@@ -29,17 +27,7 @@ class ResultScreen extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFE1D5F5),
-              Color(0xFFCFBEF0),
-              Color(0xFFBFA8E8),
-            ],
-          ),
-        ),
+        decoration: const BoxDecoration(gradient: appGradient),
         child: SafeArea(
           child: Column(
             children: [
@@ -51,22 +39,23 @@ class ResultScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (_) => const HomeScreen()),
-                            (route) => false,
-                      ),
+                      onTap: () =>
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (_) => const HomeScreen()),
+                                (route) => false,
+                          ),
                       child: Container(
                         width: 36,
                         height: 36,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF9575CD).withValues(alpha: 0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           shape: BoxShape.circle,
+                          border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.35)),
                         ),
-                        child: const Icon(
-                          Icons.close_rounded,
-                          color: Color(0xFF5E35B1),
-                          size: 20,
-                        ),
+                        child: const Icon(Icons.close_rounded,
+                            color: Colors.white, size: 18),
                       ),
                     ),
                     const Expanded(
@@ -74,60 +63,66 @@ class ResultScreen extends StatelessWidget {
                         'RESULTS',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 3,
-                          color: Color(0xFF4A148C),
+                          color: Colors.white,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 36), // balance close button
+                    const SizedBox(width: 36),
                   ],
                 ),
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
-              // Score blob card
+              // Score card
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 28),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 28, vertical: 28),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF9575CD).withValues(alpha: 0.30),
+                      horizontal: 24, vertical: 24),
+                  decoration: cardDecoration(radius: 32).copyWith(
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(60),
-                      topRight: Radius.circular(40),
-                      bottomLeft: Radius.circular(40),
+                      topRight: Radius.circular(28),
+                      bottomLeft: Radius.circular(28),
                       bottomRight: Radius.circular(60),
                     ),
                   ),
                   child: Column(
                     children: [
-                      const Icon(
-                        Icons.emoji_events_rounded,
-                        color: Color(0xFF5E35B1),
-                        size: 44,
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withValues(alpha: 0.2),
+                          border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.4),
+                              width: 1.5),
+                        ),
+                        child: const Icon(Icons.emoji_events_rounded,
+                            color: Colors.white, size: 34),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 12),
                       const Text(
                         'Quiz Completed!',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 17,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF4A148C),
-                          letterSpacing: 0.5,
+                          color: Colors.white,
                         ),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         '$correct / $total',
                         style: const TextStyle(
-                          fontSize: 48,
+                          fontSize: 52,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF4A148C),
+                          color: Colors.white,
                           height: 1,
                         ),
                       ),
@@ -135,28 +130,25 @@ class ResultScreen extends StatelessWidget {
                       Text(
                         '$percentage% Correct',
                         style: TextStyle(
-                          fontSize: 14,
-                          color: const Color(0xFF5E35B1).withValues(alpha: 0.7),
+                          fontSize: 13,
+                          color: Colors.white.withValues(alpha: 0.75),
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // Correct / Wrong chips
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           _StatPill(
-                            label: 'Correct',
-                            value: '$correct',
-                            color: const Color(0xFF7E57C2),
-                            iconData: Icons.check_rounded,
-                          ),
-                          const SizedBox(width: 14),
+                              label: 'Correct',
+                              value: '$correct',
+                              icon: Icons.check_rounded,
+                              isPositive: true),
+                          const SizedBox(width: 12),
                           _StatPill(
-                            label: 'Wrong',
-                            value: '$wrong',
-                            color: const Color(0xFF9575CD),
-                            iconData: Icons.close_rounded,
-                          ),
+                              label: 'Wrong',
+                              value: '$wrong',
+                              icon: Icons.close_rounded,
+                              isPositive: false),
                         ],
                       ),
                     ],
@@ -164,31 +156,31 @@ class ResultScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 18),
 
               // Detailed results label
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 28),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'DETAILED RESULTS',
                     style: TextStyle(
-                      fontSize: 11,
+                      fontSize: 10,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 2.5,
-                      color: const Color(0xFF5E35B1).withValues(alpha: 0.6),
+                      color: Colors.white.withValues(alpha: 0.65),
                     ),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
 
-              // Scrollable results list
+              // Scrollable results
               Expanded(
                 child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 28),
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
                   itemCount: quizQuestions.length,
                   itemBuilder: (context, index) {
                     final question = quizQuestions[index];
@@ -212,9 +204,9 @@ class ResultScreen extends StatelessWidget {
                 ),
               ),
 
-              // Bottom action buttons
+              // Bottom buttons
               Padding(
-                padding: const EdgeInsets.fromLTRB(28, 8, 28, 28),
+                padding: const EdgeInsets.fromLTRB(24, 8, 24, 28),
                 child: Row(
                   children: [
                     Expanded(
@@ -222,14 +214,15 @@ class ResultScreen extends StatelessWidget {
                         label: 'HOME',
                         icon: Icons.home_rounded,
                         filled: false,
-                        onTap: () => Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (_) => const HomeScreen()),
-                              (route) => false,
-                        ),
+                        onTap: () =>
+                            Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (_) => const HomeScreen()),
+                                  (route) => false,
+                            ),
                       ),
                     ),
-                    const SizedBox(width: 14),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: _ActionButton(
                         label: 'RESTART',
@@ -257,14 +250,14 @@ class ResultScreen extends StatelessWidget {
 class _StatPill extends StatelessWidget {
   final String label;
   final String value;
-  final Color color;
-  final IconData iconData;
+  final IconData icon;
+  final bool isPositive;
 
   const _StatPill({
     required this.label,
     required this.value,
-    required this.color,
-    required this.iconData,
+    required this.icon,
+    required this.isPositive,
   });
 
   @override
@@ -272,9 +265,10 @@ class _StatPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.18),
+        color: Colors.white.withValues(alpha: isPositive ? 0.22 : 0.12),
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: color.withValues(alpha: 0.35)),
+        border: Border.all(
+            color: Colors.white.withValues(alpha: isPositive ? 0.5 : 0.25)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -284,30 +278,24 @@ class _StatPill extends StatelessWidget {
             height: 26,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: color.withValues(alpha: 0.25),
+              color: Colors.white.withValues(alpha: 0.25),
             ),
-            child: Icon(iconData, size: 14, color: const Color(0xFF4A148C)),
+            child: Icon(icon, size: 14, color: Colors.white),
           ),
           const SizedBox(width: 8),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w800,
-                  color: Color(0xFF4A148C),
-                ),
-              ),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: const Color(0xFF5E35B1).withValues(alpha: 0.65),
-                  letterSpacing: 0.5,
-                ),
-              ),
+              Text(value,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white)),
+              Text(label,
+                  style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.white.withValues(alpha: 0.7),
+                      letterSpacing: 0.5)),
             ],
           ),
         ],
@@ -338,13 +326,13 @@ class _ResultItem extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isCorrect
-            ? const Color(0xFF7E57C2).withValues(alpha: 0.13)
-            : const Color(0xFF9575CD).withValues(alpha: 0.08),
+            ? Colors.white.withValues(alpha: 0.18)
+            : Colors.white.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: isCorrect
-              ? const Color(0xFF7E57C2).withValues(alpha: 0.40)
-              : const Color(0xFF9575CD).withValues(alpha: 0.25),
+              ? Colors.white.withValues(alpha: 0.45)
+              : Colors.white.withValues(alpha: 0.2),
         ),
       ),
       child: Column(
@@ -359,15 +347,13 @@ class _ResultItem extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: isCorrect
-                      ? const Color(0xFF7E57C2).withValues(alpha: 0.25)
-                      : const Color(0xFF9575CD).withValues(alpha: 0.20),
+                      ? Colors.white.withValues(alpha: 0.3)
+                      : Colors.white.withValues(alpha: 0.12),
                 ),
                 child: Icon(
                   isCorrect ? Icons.check_rounded : Icons.close_rounded,
                   size: 14,
-                  color: isCorrect
-                      ? const Color(0xFF4A148C)
-                      : const Color(0xFF7B1FA2),
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(width: 10),
@@ -377,7 +363,7 @@ class _ResultItem extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
-                    color: Color(0xFF4A148C),
+                    color: Colors.white,
                     height: 1.4,
                   ),
                 ),
@@ -391,18 +377,14 @@ class _ResultItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _AnswerRow(
-                  label: 'Your answer:',
-                  value: userAnswer,
-                  isCorrect: isCorrect,
-                  isUserAnswer: true,
-                ),
+                    label: 'Your answer:',
+                    value: userAnswer,
+                    isUserCorrect: isCorrect),
                 const SizedBox(height: 4),
                 _AnswerRow(
-                  label: 'Correct answer:',
-                  value: correctAnswer,
-                  isCorrect: true,
-                  isUserAnswer: false,
-                ),
+                    label: 'Correct:',
+                    value: correctAnswer,
+                    isUserCorrect: true),
               ],
             ),
           ),
@@ -415,34 +397,23 @@ class _ResultItem extends StatelessWidget {
 class _AnswerRow extends StatelessWidget {
   final String label;
   final String value;
-  final bool isCorrect;
-  final bool isUserAnswer;
+  final bool isUserCorrect;
 
   const _AnswerRow({
     required this.label,
     required this.value,
-    required this.isCorrect,
-    required this.isUserAnswer,
+    required this.isUserCorrect,
   });
 
   @override
   Widget build(BuildContext context) {
-    final valueColor = isUserAnswer
-        ? (isCorrect
-        ? const Color(0xFF5E35B1)
-        : const Color(0xFF7B1FA2).withValues(alpha: 0.7))
-        : const Color(0xFF5E35B1);
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: const Color(0xFF5E35B1).withValues(alpha: 0.55),
-          ),
-        ),
+        Text(label,
+            style: TextStyle(
+                fontSize: 12,
+                color: Colors.white.withValues(alpha: 0.55))),
         const SizedBox(width: 6),
         Expanded(
           child: Text(
@@ -450,7 +421,7 @@ class _AnswerRow extends StatelessWidget {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: valueColor,
+              color: Colors.white.withValues(alpha: isUserCorrect ? 0.95 : 0.6),
             ),
           ),
         ),
@@ -477,34 +448,34 @@ class _ActionButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 52,
+        height: 54,
         decoration: BoxDecoration(
           color: filled
-              ? const Color(0xFF7E57C2)
-              : const Color(0xFF9575CD).withValues(alpha: 0.18),
+              ? Colors.white
+              : Colors.white.withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(30),
           border: Border.all(
             color: filled
                 ? Colors.transparent
-                : const Color(0xFF9575CD).withValues(alpha: 0.5),
+                : Colors.white.withValues(alpha: 0.4),
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 18,
-              color: filled ? Colors.white : const Color(0xFF5E35B1),
-            ),
+            Icon(icon,
+                size: 18,
+                color: filled
+                    ? const Color(0xFF612A7E)
+                    : Colors.white),
             const SizedBox(width: 8),
             Text(
               label,
               style: TextStyle(
                 fontSize: 13,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
                 letterSpacing: 1.5,
-                color: filled ? Colors.white : const Color(0xFF5E35B1),
+                color: filled ? const Color(0xFF612A7E) : Colors.white,
               ),
             ),
           ],
