@@ -1,6 +1,44 @@
 import 'package:flutter/material.dart';
 import 'quiz_screen.dart';
 
+// Shared gradient — used by all screens
+const appGradient = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    Color(0xFFD9BEDC), // soft lilac top
+    Color(0xFFB086BC), // mid mauve
+    Color(0xFF834FA0), // deep violet bottom
+  ],
+  stops: [0.0, 0.41, 0.82],
+);
+
+// Box / card decoration
+BoxDecoration cardDecoration({double radius = 32}) => BoxDecoration(
+  gradient: const LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0xFFD9BEDC),
+      Color(0xFFB086BC),
+      Color(0xFF834FA0),
+    ],
+    stops: [1.0, 0.41, 0.0512],
+  ),
+  borderRadius: BorderRadius.circular(radius),
+  border: Border.all(
+    color: const Color(0xFFD9BEDC).withValues(alpha: 0.55),
+    width: 1.5,
+  ),
+  boxShadow: [
+    BoxShadow(
+      color: const Color(0xFF612A7E).withValues(alpha: 0.18),
+      blurRadius: 24,
+      offset: const Offset(0, 8),
+    ),
+  ],
+);
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -10,92 +48,65 @@ class HomeScreen extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFE1D5F5), // light lavender top
-              Color(0xFFCFBEF0), // slightly deeper mid
-              Color(0xFFBFA8E8), // deeper purple bottom
-            ],
-          ),
-        ),
+        decoration: const BoxDecoration(gradient: appGradient),
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Spacer(flex: 2),
 
-              // Brain + gears illustration area
-              SizedBox(
-                width: 220,
-                height: 220,
+              // Illustration card
+              Container(
+                width: 200,
+                height: 200,
+                decoration: cardDecoration(radius: 100),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    // Outer faint ring
+                    // Soft inner glow ring
                     Container(
-                      width: 210,
-                      height: 210,
+                      width: 160,
+                      height: 160,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: const Color(0xFF9575CD).withValues(alpha: 0.12),
+                        color: const Color(0xFFD9BEDC).withValues(alpha: 0.18),
                       ),
                     ),
-                    // Inner ring
-                    Container(
-                      width: 170,
-                      height: 170,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: const Color(0xFF9575CD).withValues(alpha: 0.15),
-                      ),
-                    ),
-                    // Icon stack
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Gears row
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
-                              Icons.settings_rounded,
-                              size: 28,
-                              color: const Color(0xFF7E57C2).withValues(alpha: 0.7),
-                            ),
+                            Icon(Icons.settings_rounded,
+                                size: 24,
+                                color: const Color(0xFFD9BEDC)
+                                    .withValues(alpha: 0.85)),
                             const SizedBox(width: 4),
-                            Icon(
-                              Icons.settings_rounded,
-                              size: 20,
-                              color: const Color(0xFF7E57C2).withValues(alpha: 0.5),
-                            ),
+                            Icon(Icons.settings_rounded,
+                                size: 16,
+                                color: const Color(0xFFD9BEDC)
+                                    .withValues(alpha: 0.6)),
                           ],
                         ),
                         const SizedBox(height: 6),
-                        // Brain icon
-                        Icon(
-                          Icons.psychology_rounded,
-                          size: 64,
-                          color: const Color(0xFF6A3FA6).withValues(alpha: 0.75),
-                        ),
+                        Icon(Icons.psychology_rounded,
+                            size: 60,
+                            color:
+                            const Color(0xFFFFFFFF).withValues(alpha: 0.9)),
                         const SizedBox(height: 6),
-                        // Wings / sparkle row
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
-                              Icons.auto_awesome_rounded,
-                              size: 22,
-                              color: const Color(0xFF7E57C2).withValues(alpha: 0.6),
-                            ),
-                            const SizedBox(width: 8),
-                            Icon(
-                              Icons.auto_awesome_rounded,
-                              size: 18,
-                              color: const Color(0xFF7E57C2).withValues(alpha: 0.45),
-                            ),
+                            Icon(Icons.auto_awesome_rounded,
+                                size: 20,
+                                color: const Color(0xFFD9BEDC)
+                                    .withValues(alpha: 0.75)),
+                            const SizedBox(width: 6),
+                            Icon(Icons.auto_awesome_rounded,
+                                size: 15,
+                                color: const Color(0xFFD9BEDC)
+                                    .withValues(alpha: 0.55)),
                           ],
                         ),
                       ],
@@ -104,16 +115,35 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 36),
+              const SizedBox(height: 32),
 
-              // QUIZ title
+              // Title
               const Text(
                 'QUIZ',
                 style: TextStyle(
-                  fontSize: 44,
+                  fontSize: 46,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF5E35B1),
-                  letterSpacing: 6,
+                  color: Colors.white,
+                  letterSpacing: 8,
+                  shadows: [
+                    Shadow(
+                      color: Color(0x55612A7E),
+                      blurRadius: 12,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              Text(
+                'আমার প্রশ্ন',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white.withValues(alpha: 0.7),
+                  letterSpacing: 2,
                 ),
               ),
 
@@ -124,7 +154,7 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 48),
                 child: SizedBox(
                   width: double.infinity,
-                  height: 52,
+                  height: 54,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(
@@ -132,13 +162,14 @@ class HomeScreen extends StatelessWidget {
                           pageBuilder: (_, anim, __) => const QuizScreen(),
                           transitionsBuilder: (_, anim, __, child) =>
                               FadeTransition(opacity: anim, child: child),
-                          transitionDuration: const Duration(milliseconds: 350),
+                          transitionDuration:
+                          const Duration(milliseconds: 350),
                         ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF9575CD),
-                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color(0xFF612A7E),
                       elevation: 0,
                       shadowColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
@@ -149,10 +180,31 @@ class HomeScreen extends StatelessWidget {
                       'START',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 3,
-                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 4,
+                        color: Color(0xFF612A7E),
                       ),
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // Subtle dots indicator
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  3,
+                      (i) => Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    width: i == 0 ? 20 : 6,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: i == 0
+                          ? Colors.white
+                          : Colors.white.withValues(alpha: 0.35),
+                      borderRadius: BorderRadius.circular(3),
                     ),
                   ),
                 ),
